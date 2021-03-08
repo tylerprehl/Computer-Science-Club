@@ -1,0 +1,21 @@
+
+Tyler Prehl
+Competitive Programming
+3/7/21
+
+We were give 14 problems to solve, and 5 hours to do so. We got 4 problems 
+correct, and due to our program/solving speeds, we got 62nd place out of 
+85. If we had gotten:
+ - 5 problems right, would've at least placed 26th
+ - 6 problems right, would've at least placed 17th (possibly moved on with
+   better program speeds) - given some time, I can figure out how to solve
+   the 6 easiest problems (Rating Problems, Unread Messages, Dominating 
+   Duos, Bad Packing, Missing Number, No Thanks)
+ - 7 problems right, would've at least placed 12th (moved on)
+
+Types of problems I keeps seeing show up (that I can't solve (fast)):
+1) in a given scenario, there is a HUGE permutation of possible routes, get 
+   the most efficient route (Ant Typing, Longest Common Subsequence, 
+   Town Patrol, Booby Trapped Escape)
+2) get all possible permutations FAST (Typing Robot)
+3) 
