@@ -18,6 +18,29 @@ The first line of input contains two integers n (1≤n≤1000) and c
 (1≤c≤105), where n is the number of objects we want to pack and c is the 
 capacity of the knapsack.
 
+*****************************
+Max's work
+
+n = number of objects
+c = capacity
+w = weight of AN object
+
+L = list of object weights
+
+K = list of object weights in bag
+
+ans = sum(K) where max(c - sum(K))
+
+ans = min sum(K)
+
+Assumptions
+
+sum(L) > c
+
+
+
+********************************
+
 Each of the next n lines contains a single integer w (1≤w≤c). These are 
 the weights of the objects.
 
@@ -62,48 +85,63 @@ is runningSum>current number?
         - if no, found possible answer 
 
 '''
-initial = input().split()
-n = int(initial[0])
-maxCap = int(initial[1])
-weights = []
-for i in range(n):
-    weights.append(int(input()))
-weights.sort()
+import itertools
+from typing import List
 
-currentTotal = weights[0]
-if currentTotal == maxCap:
-    print(maxCap)
-    exit()
-runningSum = weights[0]
-savedCap = 0
-best = maxCap
-for i in range(1,n): # loop through all (sorted) given weights
-    if weights[i]==weights[i-1]: # if multiple weights are the same, need to skip to next different number when we reach capacity with the same numbers. If it reaches end of list, just prints what the last runningSum was that was under maxCap
-        if runningSum+weights[i]<=maxCap: 
-            runningSum+=weights[i]
-        else:
-            best = runningSum
-    elif weights[i]<runningSum: # see if you can lessen lowest capacity with a larger number (21, 50, 70, cap 80)
-        savedSum = runningSum # want to hold on to previous runningSum in case it doesn't work out
-        runningSum = weights[i]
-        for j in range(i): # add weights back into runningSum from smallest to greatest, going to else if the next number exceeds capacity
-            if runningSum+weights[j]<=maxCap: 
-                runningSum+=weights[j] # if all j's are just added back in, we go back to original loop and forget this ever happened
-            else: # since savedSum represents a point in time 
-                if savedSum<runningSum:
-                    if savedSum+weights[i]<=maxCap:
-                        runningSum = savedSum+weights[i] # nothing came of this, so just add
-                    else:
-                        if savedSum<best:
-                            best = savedSum
-                else:
-                    if runningSum<best:
-                        best = runningSum
-    else: # if next num is equal to or less than runningSum...
-        if runningSum+weights[i]<=maxCap:
-            runningSum+=weights[i]
-        else:
-            if runningSum<best:
-                best = runningSum
-print(best) # prints what's left in best when loop ends 
+tests = [
+    (100, [50, 51], 50),
+    (100, [25, 50, 51], 75),
+    (100, [25, 27, 50, 51], 52),
+    (100, [40, 50, 70], 70),
+    (80, [21, 50, 70], 70),
+    (100, [20, 50, 70], 70),
+    (100, [10, 25, 60, 61], 95),
+    (100, [15, 25, 60, 61], 76),
+    (10, [3, 3, 3, 3, 5], 8),
+    (6, [3, 3, 5], 5),
+    (6, [2, 3, 3, 5], 5),
+    (100, [15,15,15,15,15,16,18,70,90], 86)
+]
 
+def maxpack(cap, weights: List[int]):
+    # print("\n", weights)
+    best = cap + 1
+    # every list of different lengths
+    for i in range(len(weights)):
+        # every combination within that length
+        for boyo in itertools.combinations(weights, i+1):
+            rest = weights.copy()
+            bruh = sum(boyo)
+            for nib in boyo:
+                rest.remove(nib)
+
+            # print(bruh, "\t", boyo, rest)
+            
+            if bruh > cap:
+                # print("bruh > cap")
+                continue
+            # get rid of combos where a number can be added and still be less than cap
+            if len(rest) > 0 and rest[0] + bruh <= cap:
+                # print("bruh + rest still < cap")
+                continue
+            if bruh < best:
+                best = bruh
+                # print("new best")
+                continue
+            # print ("best was better")
+    return best
+
+def test():
+    for test in tests:
+        print(maxpack(test[0], test[1]), "\t", test[2], "\tlist=", test[1])
+
+if __name__ == "__main__":
+    initial = input().split()
+    n = int(initial[0])
+    maxCap = int(initial[1])
+    weights = []
+    for i in range(n):
+        weights.append(int(input()))
+    weights.sort()
+    maxpack(maxCap, weights)
+    # test()
