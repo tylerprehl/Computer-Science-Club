@@ -8,8 +8,23 @@ pipeline {
     }
 
     stage('Whatever\'s Next') {
-      steps {
-        readFile '\\Competitive Programming\\Practice Problems\\RockPaperScissorsMaster.py'
+      parallel {
+        stage('Whatever\'s Next') {
+          steps {
+            readFile '\\Competitive Programming\\Practice Problems\\RockPaperScissorsMaster.py'
+            pwd(tmp: true)
+          }
+        }
+
+        stage('') {
+          steps {
+            timeout(time: 2, activity: true) {
+              echo 'Sup diggity dog'
+            }
+
+          }
+        }
+
       }
     }
 
