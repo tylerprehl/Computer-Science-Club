@@ -12,11 +12,11 @@ pipeline {
         stage('Whatever\'s Next') {
           steps {
             readFile '\\Competitive Programming\\Practice Problems\\RockPaperScissorsMaster.py'
-            pwd(tmp: true)
+            pwd()
           }
         }
 
-        stage('') {
+        stage('Second Print') {
           steps {
             timeout(time: 2, activity: true) {
               echo 'Sup diggity dog'
