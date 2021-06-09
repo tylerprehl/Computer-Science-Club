@@ -9,7 +9,7 @@ pipeline {
 
     stage('Whatever\'s Next') {
       steps {
-        readFile '/Competitive Programming/Practice Problems/RockPaperScissorsMaster.py'
+        readFile '\\Competitive Programming\\Practice Problems\\RockPaperScissorsMaster.py'
       }
     }
 
